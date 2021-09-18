@@ -1,0 +1,20 @@
+
+    <h1 class="mt-4">All Pending Applications List</h1>
+    <div class="users-table mt-4">
+    <table>
+        <tbody>
+            <tr>
+                <th>Scholarship</th>
+                <th>Full Name</th>
+                <th>Application</th>
+            </tr>
+            {% for i in pending %}
+            <tr>
+                <td>{{i.scholarship.name}}</td>
+                <td>{{i.user.user.first_name}}</td>
+                <td><a href="/student_application/{{i.id}}/" class="btn btn-warning">View Application</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
