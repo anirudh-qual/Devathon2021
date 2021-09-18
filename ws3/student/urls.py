@@ -8,7 +8,7 @@ path("update/",views.create_user,name="createuser"),
 path("status/",views.status,name="status"),
 
 path("home/", views.college, name="college"),
-
+path("add/",views.CreateScholarship,name="createscholarship"),
 path("application_form/<int:id>", views.application_form, name="application_form"),
 path("display_form/<int:id>", views.display_scholarship, name="display_form"),
 path("approved_applications/", views.approved_applications, name="approved_applications"),

@@ -7,8 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .models import Application, Student, Scholarship
 import datetime
 
-from django.views.generic import UpdateView
-from .forms import StudentForm
+from .forms import StudentForm,ScholarshipForm
 
 # Create your views here.
 def college(request):
@@ -178,3 +177,15 @@ def updatereject(request,myid):
     application.save()
     
     return redirect('/handle_admin') 
+
+def CreateScholarship(request):
+     if request.method=="POST":
+        form = ScholarshipForm(request.POST, request.FILES)
+        if form.is_valid():
+            scholarship = form.save()
+            
+            scholarship.save()
+            return redirect("/handle_admin")
+     else:
+        form=ScholarshipForm()
+     return render(request, "student\\scholarship_form.html", { 'form':form})
