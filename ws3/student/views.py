@@ -4,7 +4,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth  import authenticate,  login, logout
 from django.contrib.auth.decorators import login_required
 from .models import Application, Student, Scholarship
+from django.db import  transaction
+
 from django.views.generic import UpdateView
+from .forms import StudentForm
 
 # Create your views here.
 def college(request):
@@ -22,13 +25,29 @@ def application_form(request,id):
         return redirect("/login")
     
    
-    student=Student(user=request.user,branch='Ece')
     
+    student=Student.objects.get(user=request.user)
     scholarship=Scholarship.objects.get(id=id)
-    
     application=Application(user=student,scholarship=scholarship)
+    application.save()
     
     return render(request,"student\\application_form.html")
+
+def create_user(request):
+    if request.method=="POST":
+        form = StudentForm(request.POST, request.FILES)
+        if form.is_valid():
+            student = form.save()
+            
+            student.save()
+            return redirect("/")
+    else:
+        form=StudentForm()
+    return render(request, "student\\profile_form.html", { 'form':form})
+
+
+
+
 def register(request):
     if request.user.is_authenticated:
         return redirect("/")
@@ -51,6 +70,11 @@ def register(request):
             user.save()
             return render(request, 'student\\login.html')   
     return render(request, "student\\register.html")
+            
+           
+            
+
+
 
 def loggedin(request):
     if request.user.is_authenticated:

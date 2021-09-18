@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from multiselectfield import MultiSelectField
 
+
 class Scholarship(models.Model):
     PROGRAM=(('Btech','Btech'),('Mtech','Mtech'),('PHD','PHD'))
     CASTE=(('Oc','Oc'),('Obc','Obc'),('Sc','Sc'),('St','St'))
@@ -26,22 +27,15 @@ class Student(models.Model):
     BRANCH=(('Cse','Cse'),('Ece','Ece'),('Eee','Eee'),('Mech','Mech'),('Chem','Chem'),('Civil','Civil'),('Bio','Bio'),('Mme','Mme'),)
     GENDER=(('Male','Male'),('Female','Female'),('Other','Other'))
     
-    
-    name = models.CharField(max_length=200) 
-    email = models.CharField(max_length=200) 
-    phone_no = models.CharField(max_length=200) 
-    address = models.TextField(max_length=200) 
-    student_profile = models.ImageField(upload_to="images") 
-    course = models.CharField(max_length=100, choices= BRANCH)
-    name = models.CharField(max_length=200) 
-    email = models.CharField(max_length=200) 
-    phone_no = models.CharField(max_length=200) 
-    address = models.TextField(max_length=200) 
-    student_profile = models.ImageField(upload_to="images") 
+    user = models.OneToOneField(User, on_delete=models.CASCADE,null=True)
+    first_name=models.CharField(max_length=20,null=True)
+    rollno=models.CharField(max_length=5,null=True) 
+    student_profile = models.ImageField(upload_to="images",null=True) 
     branch = models.CharField(max_length=100, choices= BRANCH,blank=True, null=True)
     caste=models.CharField(max_length=100, choices= CASTE,blank=True, null=True)
     gender=models.CharField(max_length=100, choices=GENDER,blank=True, null=True)
 
+ 
 
 class Application(models.Model):
     
